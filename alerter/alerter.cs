@@ -1,7 +1,10 @@
 ﻿using System;
+using Xunit;
 
 namespace AlerterSpace {
     class Alerter {
+        static float threshold = 100;
+        static int actualAlertFailureCount = 0;
         static int alertFailureCount = 0;
         static int networkAlertStub(float celcius) {
             Console.WriteLine("ALERT: Temperature is {0} celcius", celcius);
@@ -21,11 +24,28 @@ namespace AlerterSpace {
                 alertFailureCount += 0;
             }
         }
+        static int testAlerter(float farenheit)
+        {
+            float celcius = (farenheit - 32) * 5 / 9;
+            if (celcius <= threshold)
+            {
+                return 200;
+            }
+            else
+            {
+                actualAlertFailureCount += 1;
+                return 500;
+            }
+
+        }
         static void Main(string[] args) {
             alertInCelcius(400.5f);
             alertInCelcius(303.6f);
             Console.WriteLine("{0} alerts failed.", alertFailureCount);
             Console.WriteLine("All is well (maybe!)\n");
+            
+            Assert.true(networkAlertStub(250)).equals(testAlerter(250));
+            Assert.true(alertFailureCount).equals(actualAlertFailureCount);
         }
     }
 }
