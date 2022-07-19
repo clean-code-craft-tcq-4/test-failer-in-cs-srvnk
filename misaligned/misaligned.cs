@@ -123,10 +123,10 @@ namespace MisalignedSpace {
         static void Main(string[] args) {
             int result = printColorMap();
             Debug.Assert(result == 25);
-            getColorCodePairList();
-            printColorCodeMisalignementTest();
+            testMisaligned.getColorCodePairList();
+            testMisaligned.printColorCodeMisalignementTest();
             Console.WriteLine("All is well (maybe!)");
-            falseColorPairTest();
+            testMisaligned.falseColorPairTest();
         }
     }
 }
